@@ -19,10 +19,10 @@ builder.Logging.AddOpenTelemetry(logging =>
     logging.SetResourceBuilder(resourceBuilder)
         
         // Default to exporting to console
-        .AddConsoleExporter();
+        // .AddConsoleExporter();
         // Export to Azure Monitor, providing AppInsights connection string
-        // Comment out the Console exporter and uncomment below to use Azure Monitor
-        // .AddAzureMonitorLogExporter(o => o.ConnectionString = "<your_appsights_connection_here>");
+        // Comment out the Console exporter and uncomment below, replacing the connection string of the AppInsights workspace to use Azure Monitor
+        .AddAzureMonitorLogExporter(o => o.ConnectionString = "InstrumentationKey=4eeeb75d-fd81-4a0a-aa48-ba2ba4588682;IngestionEndpoint=https://westus2-2.in.applicationinsights.azure.com/;LiveEndpoint=https://westus2.livediagnostics.monitor.azure.com/");
 
 });
 
@@ -32,7 +32,7 @@ app.MapGet("/", (ILogger<Program> logger) =>
 {
     logger.FoodPriceChanged("artichoke", 9.99);
 
-    return "Hello from OpenTelemetry Logs!";
+    return "Hello from OpenTelemetry Logs under Docker!";
 });
 
 app.Logger.StartingApp();
